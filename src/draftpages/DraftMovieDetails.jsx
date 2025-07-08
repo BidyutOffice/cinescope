@@ -18,7 +18,6 @@ export default function DraftMovieDetails() {
         loading,
         error,
         watchProviders,
-        country
     } = useMovieDetails(movieid);
 
     useEffect(() => { window.scrollTo({ top: 0, left: 0 }); }, [movieid]);
@@ -53,28 +52,61 @@ export default function DraftMovieDetails() {
 
                 {/* Tag Categories (same as before) */}
                 <div className="flex flex-col gap-4 text-sm">
-                    {trailer && (
-                        <a
-                            href={`https://www.youtube.com/watch?v=${trailer.key}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition-all w-fit flex items-center gap-2">
-                            <IoPlayOutline /> Watch Trailer
-                        </a>
-                    )}
+                    <div className="flex gap-4">
+                        {trailer && (
+                            <a
+                                href={`https://www.youtube.com/watch?v=${trailer.key}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition-all w-fit flex items-center gap-2">
+                                <IoPlayOutline /> Watch Trailer
+                            </a>
+                        )}
 
-                    {watchProviders?.results?.[country]?.flatrate?.length > 0 && (
-                        <div className="flex flex-wrap gap-2 items-center">
-                            <span className="text-sm font-medium">Available on:</span>
-                            {watchProviders.results[country].flatrate.map((p, i) => (
-                                <img
-                                    key={i}
-                                    src={`https://image.tmdb.org/t/p/w92${p.logo_path}`}
-                                    alt={p.provider_name}
-                                    title={p.provider_name}
-                                    className="h-8 w-8 object-contain rounded"
-                                />
-                            ))}
+                        {/* IMDb link (optional, add if you have imdb_id in movie data) */}
+                        {movie?.imdb_id && (
+                            <a
+                                href={`https://www.imdb.com/title/${movie.imdb_id}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 text-amber-600 hover:text-amber-500 text-sm font-semibold mt-2 underline"
+                                title="View on IMDb"
+                            >
+                                🎬 IMDb
+                            </a>
+                        )}
+                    </div>
+
+                    {/* Providers */}
+                    {watchProviders && (
+                        <div className="flex text-sm flex-col gap-4 text-slate-800">
+                            {['flatrate', 'buy', 'rent'].map((type) => {
+                                const providers = watchProviders[type];
+                                if (!providers || providers.length === 0) return null;
+
+                                // Emoji for each type
+                                const labelEmoji = type === 'flatrate' ? '📺' : type === 'buy' ? '💰' : '🎬';
+                                const labelText = type === 'flatrate' ? 'Streaming' : type === 'buy' ? 'Buy' : 'Rent';
+
+                                return (
+                                    <div key={type}>
+                                        <h4 className="mb-2 font-semibold text-slate-700">
+                                            {labelEmoji} {labelText}
+                                        </h4>
+                                        <div className="flex flex-wrap gap-2">
+                                            {providers.map((p, i) => (
+                                                <span
+                                                    key={`${type}-${i}`}
+                                                    className="bg-slate-200 text-slate-800 px-3 py-1 rounded-full cursor-default"
+                                                    title={p.provider_name}
+                                                >
+                                                    {p.provider_name}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     )}
 
