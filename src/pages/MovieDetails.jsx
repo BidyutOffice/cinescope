@@ -20,19 +20,17 @@ export default function MovieDetails() {
     if (error) return <ErrorUI message="Movie not found or network error." />;
     if (loading) return <LoadingUI />;
 
-    console.log(trailer);
-
     return (
-        <div className="max-w-6xl py-10 px-4 mx-auto flex flex-col gap-10">
+        <div className="max-w-6xl py-10 px-4 mx-auto flex flex-col gap-10 dark:bg-gray-950">
             <Link
                 to="/movies"
-                className="text-sm text-blue-600 hover:underline inline-block"
+                className="text-sm text-red-600 hover:underline inline-block"
             >
                 ← Back to Movies
             </Link>
 
             {/* Main Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-10 dark:bg-gray-950">
                 <img
                     loading="lazy"
                     className="w-full h-auto rounded-xl shadow-lg object-cover"
