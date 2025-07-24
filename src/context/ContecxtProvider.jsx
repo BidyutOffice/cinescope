@@ -37,8 +37,8 @@ export default function ThemeProvider({ children }) {
 
     useEffect(() => {
         localStorage.setItem("theme", state.theme);
-        document.documentElement.setAttribute("data-theme", state.theme);
-        document.body.classList.add(state.theme);
+        // document.documentElement.setAttribute("data-theme", state.theme);
+        document.body.classList.toggle("dark", state.theme === "dark");
     }, [state.theme]);
 
     const toggleTheme = () => dispatch({ type: THEME_ACTIONS.TOGGLE });
