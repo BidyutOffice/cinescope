@@ -5,7 +5,6 @@ import BaseLoadingUI from "./components/BaseLoadingUI";
 import { useTheme } from "./context/ContecxtProvider";
 import { FiSun, FiMoon } from "react-icons/fi";
 
-// Lazy-loaded pages
 const Movies = lazy(() => import("./pages/Movies"));
 const Welcome = lazy(() => import("./pages/Welcome"));
 const DraftMovieDetails = lazy(() => import("./draftpages/DraftMovieDetails"));
@@ -16,7 +15,6 @@ function App() {
 
 	return (
 		<div className="min-h-screen bg-white dark:bg-gray-950 text-black dark:text-white transition-colors duration-300">
-			{/* Theme Toggle Button */}
 			<button
 				onClick={toggleTheme}
 				className="fixed top-5 right-5 z-50 flex items-center gap-2 px-4 py-2 rounded-full shadow-md transition-colors duration-300
@@ -25,11 +23,10 @@ function App() {
 			>
 				{theme === "dark" ? <FiSun className="text-xl" /> : <FiMoon className="text-xl" />}
 				<span className="hidden sm:inline text-sm font-medium">
-					{theme === "dark" ? "Light Mode" : "Dark Mode"}
+					{theme === "dark" ? "Light" : "Dark"}
 				</span>
 			</button>
 
-			{/* Lazy-loaded Pages */}
 			<Suspense fallback={<BaseLoadingUI />}>
 				<Routes>
 					<Route path="/" element={<Welcome />} />
